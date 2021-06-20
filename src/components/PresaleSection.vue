@@ -129,7 +129,7 @@ export default {
     data(){return {
         _appConfig: appConfig,
         showAll: false,
-        buyAmountInBNB: 0.1,
+        buyAmountInBNB: appConfig.minBuyAmountInBNB,
         _walletProvider: null,
         isConnected: false,
         walletAccount: null,
@@ -393,8 +393,8 @@ export default {
                 return;
             }
 
-            if(this.buyAmountInBNB <= 0){
-                Swal.fire({icon: 'error', text: `Amount cannot be less than 0 BNB`})
+            if(this.buyAmountInBNB < appConfig.minBuyAmountInBNB){
+                Swal.fire({icon: 'error', text: `Amount cannot be less than ${appConfig.minBuyAmountInBNB} BNB`})
                 return;
             }
 

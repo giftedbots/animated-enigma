@@ -8,6 +8,8 @@ export default {
 
     numberOfTokensPerBNB: 90_000_000_000,
 
+    minBuyAmountInBNB: 0.01,
+
     // contract address
     contractAddress: "0xc3B24078182533C2aBE5e84F8d7aB4e4644E08F3",
 
