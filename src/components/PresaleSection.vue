@@ -435,7 +435,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 
     #ei-screenshots{
         background: url('/assets/img/app-landing/shape/ss-shape1.png'),  url('/assets/img/app-landing/shape/ss-shape2.png');
@@ -447,7 +447,16 @@ export default {
         width: 50px !important;
         font-size: 20px !important;
         font-weight: normal;
+
+        @media only screen and (max-width: 600px) {
+            .flip-clock-label { display: none; }
+        } 
     }
+
+     @media only screen and (max-width: 600px) {
+        .flip-clock-label { display: none; }
+    } 
+
     .btn, .input-group , .ref-form{
         height: 60px !important;
         border-radius: 60px !important;
