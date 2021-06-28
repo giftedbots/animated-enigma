@@ -218,7 +218,7 @@ export default {
 
         getCurHost(){
             let port = window.location.port;
-            let url = `${window.location.protocol}://${window.location.hostname}`;
+            let url = `${window.location.hostname}`;
 
             if(port.toString() != "" && ![80,443].includes(port)){
                 url = `${url}:${port}`;
