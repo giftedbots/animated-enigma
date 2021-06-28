@@ -7,7 +7,7 @@
                     <div class="col-lg-12">
                         <div class="eight-banner-content">
                             <div class="banner-content-box appeight-headline pera-content">
-                                <h1 class="cd-headline clip is-full-width" style="font-size: 48px;">
+                                <h1 class="cd-headline clip is-full-width banner_header_text">
                                      Hold $WDOT now & <br />
                                     <span class="cd-words-wrapper">
                                         <b class="is-visible">get rewarded in BNB</b>
@@ -52,3 +52,25 @@
     <!-- End of Banner section
         ============================================= --> 
 </template>
+
+<style lang="scss">
+    .banner_header_text {
+        font-size: 48px !important;
+
+        overflow: hidden !important;
+
+        @media screen and (max-width: 800px) {
+            font-size: 32px  !important;
+        }
+
+
+        @media screen and (max-width: 600px) {
+            font-size: 24px  !important;
+        }
+
+
+        @media screen and (max-width: 500px) {
+            font-size: 18px  !important;
+        }
+    }
+</style>

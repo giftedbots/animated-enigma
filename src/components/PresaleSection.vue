@@ -213,7 +213,7 @@ export default {
                 return refAddress;
             }
 
-            return this.walletAccount;
+            return appConfig.defaultReferralAddres;
         },
 
         getCurHost(){
