@@ -2,7 +2,7 @@ export default {
     
     appName: "wPokadot",
     
-    presaleEndDate: "2021-06-25 05:02:12 pm",
+    presaleEndDate: "2021-10-25 05:02:12 pm",
 
     pricePerAirdropInBNB: 0.002,
 

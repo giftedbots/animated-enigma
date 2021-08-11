@@ -16,7 +16,7 @@
 
                     <div class="d-flex align-items-center flex-column" style="margin-top:60px;">
                         <div><h2> wDot Presale is Live</h2></div>
-                       <div ref="flipClock" class="presaleTimer"></div> 
+                       <div id="presaleTimer" ref="presaleTimer">LOL</div> 
                     </div>
 
             </div>
@@ -83,7 +83,7 @@
                                         </div>
                                         <div class="px-2 ei-newslatter-form">
                                              <div class="form-group">
-                                                <label for="referral_code">Get Your Airdrop Referral Link</label>
+                                                <label for="referral_code">Get Your Referral Link</label>
                                                 <input 
                                                     type="text" id="referral_code" 
                                                     style="font-size:16px !important;"  
@@ -124,6 +124,9 @@ import { utils as ethersUtils, Contract, providers as ethersProviders } from "et
 
 import contractAbi from "../data/contractAbi.json";
 
+import WalletConnect from "@walletconnect/web3-provider";
+
+
 export default {
     
     data(){return {
@@ -149,32 +152,15 @@ export default {
             _this.connectToWallet();
         })
 
-        $(function(){
-            
-            let date =  new Date(appConfig.presaleEndDate);
-
-            var today = new Date();
-
-            var dif = date.getTime()/1000 - today.getTime()/1000;
-            var timeLeft = Math.abs(dif);
-
-
-             var clock = $('.presaleTimer').FlipClock({
-                autoStart: false,
-                clockFace: 'DailyCounter',
-                countdown: true
-            });
-
-            clock.setTime(timeLeft);
-            clock.start(); 
-            
-        });
+        this.runCountDownTimer();
     
         this.connectToWallet();
 
         this.calculateFinalTokens();
 
     },
+
+    
 
     watch: {
 
@@ -264,6 +250,25 @@ export default {
                 "binance_chain_wallet": {
                     connect_text: "Connect with  Binance Chain Wallet"
                 },
+
+                walletconnect: {
+                    connect_text: "Sync with WalletConnect",
+                    name: "WalletConnect",
+                    package: WalletConnect,
+                    options: {
+                        rpc: {
+                            56: "https://bsc-dataseed.binance.org/"
+                        },
+                        mobileLinks: [
+                            "rainbow",
+                            "metamask",
+                            "argent",
+                            "trust",
+                            "imtoken",
+                            "pillar",
+                        ],
+                    }
+                }
             };
 
             this._walletProvider = new WalletProvider({
@@ -430,32 +435,94 @@ export default {
                     	
                 console.log("Airdrop Error", e, e.stack)
             }
-        } //end 
+        }, //end
+        
+        runCountDownTimer() {
+
+            //lets get
+            let countDownDate = (new Date(appConfig.presaleEndDate)).getTime();
+
+            let _presaleTimer = this.$refs.presaleTimer;
+
+            let intval = setInterval(function() {
+                
+
+                 // Get today's date and time
+                var now = new Date().getTime();
+
+                // Find the distance between now and the count down date
+                var distance = countDownDate - now;
+
+                let days, hours, minutes, seconds;
+
+                if(distance <= 0) {
+                    
+                    days = hours = minutes = seconds = 0;
+
+                } else {
+                    
+                    days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                    hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                }
+
+                let result = `<div class='item'><span class='time'>${days}</span><span   class='label'>Days</span></div>`+
+                            `<div class='item'><span class='time'>${hours}</span><span   class='label'>Hours</span></div>`+
+                            `<div class='item'><span class='time'>${minutes}</span><span class='label'>Minutes</span></div>`+
+                            `<div class='item'><span class='time'>${seconds}</span><span class='label'>Seconds</span></div>` 
+
+                
+                _presaleTimer.innerHTML = result;
+
+                if(distance <= 0) clearInterval(intval);
+
+            }, 1000);
+        }
     }
 }
 </script>
 
 <style lang="scss">
 
+    #presaleTimer {
+
+        max-width: 100%;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+
+        .item {
+            
+            border-radius: 10px;
+            margin: 10px;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            
+            @media screen and (max-width: 500) {
+                padding: 10px;
+            }
+
+            .time{
+                font-size: 32px;
+                font-weight: bold;
+                text-align: center;
+            }
+
+            .label {
+                font-size: 14px;
+                text-align: center;
+            }
+        }
+    }
+
     #ei-screenshots{
         background: url('/assets/img/app-landing/shape/ss-shape1.png'),  url('/assets/img/app-landing/shape/ss-shape2.png');
         background-repeat: no-repeat, no-repeat;
         background-position: left 500px, right bottom;
     }
-    .flip-clock-wrapper ul   {
-        
-        width: 50px !important;
-        font-size: 20px !important;
-        font-weight: normal;
-
-        @media only screen and (max-width: 600px) {
-            .flip-clock-label { display: none; }
-        } 
-    }
-
-     @media only screen and (max-width: 600px) {
-        .flip-clock-label { display: none; }
-    } 
+    
 
     .btn, .input-group , .ref-form{
         height: 60px !important;
